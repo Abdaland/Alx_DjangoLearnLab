@@ -2,6 +2,10 @@
 
 
 
+from bookshelf.models import Book
+
+
+
 \# Command:
 
 book = Book.objects.get(title="1984")
@@ -13,6 +17,4 @@ print(book.title, book.author, book.publication\_year)
 \# Expected output:
 
 \# 1984 George Orwell 1949
-
-
 
