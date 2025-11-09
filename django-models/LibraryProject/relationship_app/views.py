@@ -75,3 +75,14 @@ def edit_book(request, pk):
         return redirect("list_books")
     authors = Author.objects.all()
     return render(request, "relationship_app/edit_book.html", {"book": book, "authors": authors})
+# --- Registration ---
+def register_view(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('list_books')  # redirect after signup
+    else:
+        form = UserCreationForm()
+    return render(request, 'relationship_app/register.html', {'form': form})
