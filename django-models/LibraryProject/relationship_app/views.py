@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import user_passes_test, permission_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.detail import DetailView
 from .models import Library, Book
+from django.contrib.auth.decorators import permission_required
+from django.shortcuts import get_object_or_404, redirect
 
 
 # --- Registration ---
@@ -86,3 +88,12 @@ def register_view(request):
     else:
         form = UserCreationForm()
     return render(request, 'relationship_app/register.html', {'form': form})
+
+@permission_required('relationship_app.can_delete_book')
+def delete_book(request, pk):
+    book = get_object_or_404(Book, pk=pk)
+    if request.method == "POST":
+        book.delete()
+        return redirect('list_books')
+    return render(request, 'relationship_app/delete_book.html', {'book': book})
+

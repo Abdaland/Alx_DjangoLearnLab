@@ -7,6 +7,7 @@ from .views import (
     librarian_view,
     member_view
 )
+from .views import add_book, edit_book, delete_book
 
 urlpatterns = [
     path('register/', register_view, name='register'),
@@ -28,4 +29,10 @@ urlpatterns = [
     path('admin-view/', views.admin_view, name='admin_view'),
     path('librarian-view/', views.librarian_view, name='librarian_view'),
     path('member-view/', views.member_view, name='member_view'),
+]
+
+urlpatterns += [
+    path('add_book/', add_book, name='add_book'),
+    path('edit_book/<int:pk>/', edit_book, name='edit_book'),
+    path('delete_book/<int:pk>/', delete_book, name='delete_book'),
 ]
