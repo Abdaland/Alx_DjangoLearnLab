@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import permission_required
 from django.shortcuts import get_object_or_404
+from .forms import BookForm
 
 # --- Add Book ---
 @permission_required('relationship_app.can_add_book')
