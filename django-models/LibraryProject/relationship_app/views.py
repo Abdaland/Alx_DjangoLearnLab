@@ -1,9 +1,10 @@
+from .models import Library
+from .models import Book
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import user_passes_test
 from django.views.generic.detail import DetailView
-from .models import Book, Library  # Library must be imported
 
 # --- Registration ---
 def register_view(request):
