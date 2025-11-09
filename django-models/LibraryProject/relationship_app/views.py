@@ -1,10 +1,9 @@
-from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
-from django.contrib.auth.decorators import user_passes_test, permission_required
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import user_passes_test
 from django.views.generic.detail import DetailView
-from .models import Book, Library
-from .forms import BookForm  # You need a simple ModelForm for Book
+from .models import Book, Library  # Library must be imported
 
 # --- Registration ---
 def register_view(request):
@@ -13,7 +12,7 @@ def register_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('list_books')
+            return redirect('list_books')  # redirect after signup
     else:
         form = UserCreationForm()
     return render(request, 'relationship_app/register.html', {'form': form})
@@ -23,13 +22,13 @@ def list_books(request):
     books = Book.objects.all()
     return render(request, 'relationship_app/list_books.html', {'books': books})
 
-# --- Library detail ---
+# --- Library Detail View ---
 class LibraryDetailView(DetailView):
     model = Library
     template_name = 'relationship_app/library_detail.html'
     context_object_name = 'library'
 
-# --- Role checks ---
+# --- Role-based checks ---
 def is_admin(user):
     return user.userprofile.role == 'Admin'
 
@@ -51,21 +50,3 @@ def librarian_view(request):
 @user_passes_test(is_member)
 def member_view(request):
     return render(request, 'relationship_app/member_view.html')
-
-# --- Book add/edit views with permissions ---
-@permission_required('relationship_app.can_add_book')
-def add_book(request):
-    form = BookForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-        return redirect('list_books')
-    return render(request, 'relationship_app/book_form.html', {'form': form})
-
-@permission_required('relationship_app.can_change_book')
-def edit_book(request, pk):
-    book = get_object_or_404(Book, pk=pk)
-    form = BookForm(request.POST or None, instance=book)
-    if form.is_valid():
-        form.save()
-        return redirect('list_books')
-    return render(request, 'relation
