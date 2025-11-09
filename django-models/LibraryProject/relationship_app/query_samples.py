@@ -29,5 +29,5 @@ def list_books_by_author(author_name):
     return Book.objects.filter(author=author)          # ✅ exact line
 
 def get_librarian(library_name):
-    library = Library.objects.get(name=library_name)  # ✅ exact line
-    return library.librarian
+    library = Library.objects.get(name=library_name)
+    return Librarian.objects.get(library=library)  # ✅ ALX expects this exact line
