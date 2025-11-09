@@ -37,4 +37,9 @@ urlpatterns = [
     path('librarian-view/', views.librarian_view, name='librarian_view'),
     path('member-view/', views.member_view, name='member_view'),
 ]
+from .views import delete_book
+
+urlpatterns += [
+    path('delete_book/<int:pk>/', delete_book, name='delete_book'),
 ]
+

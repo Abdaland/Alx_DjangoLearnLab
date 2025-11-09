@@ -24,3 +24,12 @@ def edit_book(request, pk):
         book.save()
         return redirect("list_books")
     authors = Author.objects.all()
+
+# --- Delete Book ---
+@permission_required('relationship_app.can_delete_book')
+def delete_book(request, pk):
+    book = get_object_or_404(Book, pk=pk)
+    if request.method == "POST":
+        book.delete()
+        return redirect("list_books")
+    return render(request, "relationship_app/delete_book.html", {"book": book})
