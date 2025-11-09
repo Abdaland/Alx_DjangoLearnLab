@@ -37,15 +37,3 @@ urlpatterns = [
     path('librarian-view/', views.librarian_view, name='librarian_view'),
     path('member-view/', views.member_view, name='member_view'),
 ]
-from .views import delete_book
-
-urlpatterns += [
-    path('delete_book/<int:pk>/', delete_book, name='delete_book'),
-]
-
-from .views import add_book, edit_book
-
-urlpatterns += [
-    path('add_book/', add_book, name='add_book'),
-    path('edit_book/<int:pk>/', edit_book, name='edit_book'),
-]
