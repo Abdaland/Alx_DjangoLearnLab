@@ -21,12 +21,13 @@ def run():
     print("Librarian:", librarian.name, "| Library:", librarian.library.name)
 
 def list_books_in_library(library_name):
-    library = Library.objects.get(name=library_name)  # Required by ALX check
+    library = Library.objects.get(name=library_name)  # ✅ required
     return library.books.all()
 
 def list_books_by_author(author_name):
-    return Book.objects.filter(author__name=author_name)
+    author = Author.objects.get(name=author_name)      # ✅ exact line
+    return Book.objects.filter(author=author)          # ✅ exact line
 
 def get_librarian(library_name):
-    library = Library.objects.get(name=library_name)
+    library = Library.objects.get(name=library_name)  # ✅ exact line
     return library.librarian
