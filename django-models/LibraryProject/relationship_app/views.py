@@ -50,3 +50,8 @@ def librarian_view(request):
 @user_passes_test(is_member)
 def member_view(request):
     return render(request, 'relationship_app/member_view.html')
+
+@permission_required('relationship_app.can_add_book')
+@permission_required('relationship_app.can_change_book')
+@permission_required('relationship_app.can_delete_book')
+
