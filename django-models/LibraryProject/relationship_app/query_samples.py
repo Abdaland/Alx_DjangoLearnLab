@@ -19,3 +19,14 @@ def run():
     print("Book:", book.title, "| Author:", book.author.name)
     print("Library:", library.name, "| Books:", [b.title for b in library.books.all()])
     print("Librarian:", librarian.name, "| Library:", librarian.library.name)
+
+def list_books_in_library(library_name):
+    library = Library.objects.get(name=library_name)  # Required by ALX check
+    return library.books.all()
+
+def list_books_by_author(author_name):
+    return Book.objects.filter(author__name=author_name)
+
+def get_librarian(library_name):
+    library = Library.objects.get(name=library_name)
+    return library.librarian
